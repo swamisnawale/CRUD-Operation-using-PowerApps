@@ -1,0 +1,101 @@
+If(
+    frm_EmployeeDatabase.Mode = FormMode.New,
+    Patch(
+        'Employee Database',
+        Defaults('Employee Database'),
+        {
+            'Full Name': txt_FullName.Text,
+            Department: cmb_Department.Selected,
+            'Tech Stack': cmb_TechStack.SelectedItems,
+            'Date of Birth': dte_DOB.SelectedDate,
+            About: txt_About.Text,
+            'Reporting Manager': {
+                '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                Claims: cmb_ReportingManager.Selected.Claims,
+                Department: "",
+                DisplayName: cmb_ReportingManager.Selected.DisplayName,
+                Email: cmb_ReportingManager.Selected.Email,
+                JobTitle: "",
+                Picture: ""
+            },
+            'Unit Members': ForAll(
+                cmb_UnitMembers.SelectedItems,
+                {
+                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    Claims: cmb_UnitMembers.Selected.Claims,
+                    Department: "",
+                    DisplayName: cmb_UnitMembers.Selected.DisplayName,
+                    Email: cmb_UnitMembers.Selected.Email,
+                    JobTitle: "",
+                    Picture: ""
+                }
+            ),
+            'Year of Experience': Value(txt_YearOfExperience.Text),
+            Married: tog_Married.Value,
+            'Linkedin Profile Link': txt_LinkedInProfileLink.Text,
+            'Profile Image': Image2.Image,
+            Country: {
+                Id: cmb_Country.Selected.Id,
+                Value: cmb_Country.Selected.Value
+            },
+            'Relocation Preference': ForAll(
+                cmb_Relocation.SelectedItems,
+                {
+                    Id: ThisRecord.Id,
+                    Value: ThisRecord.Value
+                }
+            )
+        }
+    ),
+    Patch(
+        'Employee Database',
+        LookUp(
+            'Employee Database',
+            ID = gal_Employees.Selected.ID
+        ),
+        {
+            'Full Name': txt_FullName.Text,
+            Department: cmb_Department.Selected,
+            'Tech Stack': cmb_TechStack.SelectedItems,
+            'Date of Birth': dte_DOB.SelectedDate,
+            About: txt_About.Text,
+            'Reporting Manager': {
+                '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                Claims: cmb_ReportingManager.Selected.Claims,
+                Department: "",
+                DisplayName: cmb_ReportingManager.Selected.DisplayName,
+                Email: cmb_ReportingManager.Selected.Email,
+                JobTitle: "",
+                Picture: ""
+            },
+            'Unit Members': ForAll(
+                cmb_UnitMembers.SelectedItems,
+                {
+                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedUser",
+                    Claims: cmb_UnitMembers.Selected.Claims,
+                    Department: "",
+                    DisplayName: cmb_UnitMembers.Selected.DisplayName,
+                    Email: cmb_UnitMembers.Selected.Email,
+                    JobTitle: "",
+                    Picture: ""
+                }
+            ),
+            'Year of Experience': Value(txt_YearOfExperience.Text),
+            Married: tog_Married.Value,
+            'Linkedin Profile Link': txt_LinkedInProfileLink.Text,
+            'Profile Image': Image2.Image,
+            Country: {
+                Id: cmb_Country.Selected.Id,
+                Value: cmb_Country.Selected.Value
+            },
+            'Relocation Preference': ForAll(
+                cmb_Relocation.SelectedItems,
+                {
+                    Id: ThisRecord.Id,
+                    Value: ThisRecord.Value
+                }
+            )
+        }
+    )
+);
+ResetForm(frm_EmployeeDatabase)
